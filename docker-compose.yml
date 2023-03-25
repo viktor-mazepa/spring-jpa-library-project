@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  spring-jpa-app:
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-jpa-library-project
+    ports:
+      - 8080:8080
+  postgres:
+    image: postgres:11.6
+    ports:
+      - 5432:5432
+    restart: always
+    container_name: postgres_library_db
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/data

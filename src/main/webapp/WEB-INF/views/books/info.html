@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Информация о книге</title>
+</head>
+<body>
+<table>
+    <tr>
+        <p style="bold" th:text="${book.getTitle()+ ', ' +book.getAuthor()+ ', ' + book.getYearOfPublication()}">VALUE</p>
+    </tr>
+    <tr th:if="${assignedPerson}">
+        <td>
+            <!-- <div>Книга сейчас у:</div>-->
+            <div th:text="'Книга сейчас у: ' + ${assignedPerson.getFullName()}">Person fullname</div>
+        </td>
+
+        <td>
+            <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
+                <input type="submit" value="Освободить книгу"/>
+            </form>
+        </td>
+    </tr>
+
+    <tr th:if="${people}">
+        <td>
+            Эта книга свободна. Кому назначить ее?
+        </td>
+    </tr>
+    <tr th:if="${people}">
+        <td>
+            <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+                <label>Выберете человека, который берет книгу:</label>
+                <select th:object="${person}" th:field="*{id}" id="person">
+                    <option th:each="person : ${people}" th:value="${person.getId()}"
+                            th:text="${person.getFullName()}"/>
+                </select>
+                <input type="submit" value="Назначить книгу"/>
+            </form>
+        </td>
+    </tr>
+</table>
+<table>
+    <tr height="10px"/>
+    <tr>
+        <td>
+            <form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+                <input type="submit" value="Редактировать"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+                <input type="submit" value="Удалить"/>
+            </form>
+        </td>
+        <td>
+            <a href="/books">Вернуться к списку книг</a>
+        </td>
+    </tr>
+
+</table>
+</body>
+</html>

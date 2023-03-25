@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать новую книгу</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/books/{id}(id=${book.getId()})}" th:object="${book}">
+    <table>
+        <tr>
+            <td>
+                <label for="title">Введите название книги:</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{title}" id="title"/>
+                <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="author">Введите автора книги:</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{author}" id="author"/>
+                <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">author error</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="yearOfPublication">Введите год публикации:</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{yearOfPublication}" id="yearOfPublication"/>
+                <div style="color:red" th:if="${#fields.hasErrors('yearOfPublication')}"
+                     th:errors="*{yearOfPublication}">yearBirth error
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Редактировать книгу"/>
+            </td>
+            <td>
+                <a th:href="@{/books/{id}(id=${book.getId()})}">Вернуться к просмотру книги</a>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

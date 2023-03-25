@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список книг</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Список книг:</th>
+    </tr>
+    <tr th:each="book: ${books}">
+        <td>
+            <a th:href="@{/books/{id}(id=${book.getId()})}"
+               th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYearOfPublication()}">book</a>
+        </td>
+    </tr>
+    <tr height="20px"/>
+    <tr th:if="${page>=0}">
+        <td th:if = "${page.intValue()>0}">
+            <a th:href="@{/books(page=${page.intValue()-1}, sort_by_year=yes,books_per_page=3)}">Предудыщая страница</a>
+        </td>
+        <td th:unless="${books.isEmpty()}">
+            <a th:href="@{/books(page=${page.intValue()+1}, sort_by_year=yes,books_per_page=3)}">Следующая страница</a>
+        </td>
+    </tr>
+    <tr height="20px"/>
+    <tr>
+        <td>
+            <a href="/books/new">Добавить новую книгу</a>
+        </td>
+        <td><a href="/">Вернуться на главную</a></td>
+    </tr>
+</table>
+</body>
+</html>
